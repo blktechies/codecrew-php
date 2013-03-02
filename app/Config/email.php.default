@@ -33,7 +33,7 @@
  *		Debug		- Do not send the email, just return the result
  *
  * You can add custom transports (or override existing transports) by adding the
- * appropriate file to app/Network/Email.  Transports should be named 'YourTransport.php',
+ * appropriate file to app/Network/Email. Transports should be named 'YourTransport.php',
  * where 'Your' is the name of the transport.
  *
  * from =>
@@ -58,7 +58,7 @@ class EmailConfig {
 		'username' => 'user',
 		'password' => 'secret',
 		'client' => null,
-		'log' => false,
+		'log' => false
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
