@@ -36,7 +36,7 @@
 		</style>
 
 		<?php
-		echo $this->Html->css('boostrap-responsive.min');
+		echo $this->Html->css('bootstrap-responsive.min');
 		echo $this->Html->css('style');
 
 		echo $this->fetch('meta');
