@@ -234,13 +234,14 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+REATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first` varchar(45) DEFAULT NULL,
   `last` varchar(45) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `dob` date DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `lastlogin` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
