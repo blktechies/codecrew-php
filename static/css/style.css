@@ -5,6 +5,15 @@ input[type="text"] {
 
 }
 
+.brand img {
+	margin-left: 73px;
+}
+
+.navbar .nav {
+	float: right;
+	margin-right: 95px;
+}
+
 #navigation {
 	border-bottom: 1px solid #999;
 	margin-bottom: 20px;
@@ -135,4 +144,12 @@ hr {
 	float:right;
 }
 
+#single .span1 a{
+	display: block;
+	border: 1px solid red;
+	width: 15px;
+	height: 15px;
+	background: url('../img/glyphicons.png') no-repeat -34px -953px;
+	text-indent: -1000px;
+}
 
