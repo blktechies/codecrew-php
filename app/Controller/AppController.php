@@ -47,7 +47,7 @@ class AppController extends Controller {
         ),
     );
     
-    public function beforFilter(){
+    public function beforeFilter(){
         parent::beforeFilter();
         App::import('Model', 'User');
         User::store($this->Auth->user());
@@ -60,6 +60,7 @@ class AppController extends Controller {
     
     private function setUserAndCourse($data){
         $data['user_id'] = User::get('id');
+        $this->Course->recursive = -1;
         $data['course_id'] = $this->Course->findCurrent($data['user_id']);
         return $data;
     }

@@ -116,11 +116,8 @@ class Course extends AppModel {
             if(!$this->id){
                 $this->data['Course']['regcode'] = $this->rand_string(8);
             }
-            App::import('Model', 'User');
-            $this->User = new User();
-            $this->data['Course']['modifiedby'] = $this->User->get('id');
-            debug( User::get('id') );
-            die();
+            $user_id = User::get('id');
+            $this->data['Course']['modifiedby'] = $user_id;
             return $this->data;
         }
 
