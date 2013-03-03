@@ -53,9 +53,9 @@ class Course extends AppModel {
 			),
 		),
 		'details' => array(
-			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
-				//'message' => 'Your custom message here',
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Please include details about the course.',
 				'allowEmpty' => false,
 				'required' => true,
 				//'last' => false, // Stop validation after this rule
@@ -77,8 +77,6 @@ class Course extends AppModel {
 			'foreignKey' => 'teacher_id',
                         'table'=> 'users',
 			'conditions' => ' Teacher.admin = true',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 
@@ -92,14 +90,6 @@ class Course extends AppModel {
 			'className' => 'Question',
 			'foreignKey' => 'course_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 
@@ -116,20 +106,29 @@ class Course extends AppModel {
 			'foreignKey' => 'user_id',
 			'associationForeignKey' => 'course_id',
 			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
 	);
 
+        /*** Call Backs ***/
+        public function beforeSave(){
+            $this->data = parent::beforeSave($this->data);
+            //set registration code for inserts.
+            if(!$this->id){
+                $this->data['Course']['regcode'] = $this->rand_string(8);
+            }
+            App::import('Model', 'User');
+            $this->User = new User();
+            $this->data['Course']['modifiedby'] = $this->User->get('id');
+            debug( User::get('id') );
+            die();
+            return $this->data;
+        }
+
+        public function beforeFind($queryData){
+            parent::beforeFind($queryData);
+        }
+
         public function findCurrent($user_id){
-
-
             return true;
         }
 
@@ -138,7 +137,7 @@ class Course extends AppModel {
             $conditions = array(
                 0=> 'Course.start > current_date()',
                 1=> 'Course.end < current_date()',
-                'User.id'=>$user_id,
+                'CouresUser.user_id'=>$user_id,
             );
 
             $this->Behaviors->load('Containable');

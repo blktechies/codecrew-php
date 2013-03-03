@@ -225,7 +225,7 @@ class User extends AppModel {
 
     public function get($path) {
       $_user =& User::getInstance();
-
+      
       $path = str_replace('.', '/', $path);
       if (strpos($path, 'User') !== 0) {
         $path = sprintf('User/%s', $path);
@@ -235,12 +235,13 @@ class User extends AppModel {
         $path = sprintf('/%s', $path);
       }
 
+
       $value = Set::extract($path, $_user);
 
       if (!$value) {
         return false;
       }
-
+      
       return $value[0];
     }
 
@@ -249,8 +250,7 @@ class User extends AppModel {
     public function beforeSave($options = array()) {
         // Use bcrypt
         if (isset($this->data['User']['password'])) {
-            //$hash = Security::hash($this->data['User']['password'], 'blowfish');
-            $hash = $this->data['User']['password'];
+            $hash = Security::hash($this->data['User']['password'], 'blowfish');
             $this->data['User']['password'] = $hash;
         }
         return true;
