@@ -204,4 +204,13 @@ class User extends AppModel {
 		)
 	);
 
+
+    public function beforeSave($options = array()) {
+        // Use bcrypt
+        if (isset($this->data['User']['password'])) {
+            $hash = Security::hash($this->data['User']['password'], 'blowfish');
+            $this->data['User']['password'] = $hash;
+        }
+        return true;
+    }
 }
