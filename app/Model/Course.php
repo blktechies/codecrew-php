@@ -24,17 +24,17 @@ class Course extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'maxlength' => array(
-				'rule' => array('maxlength'),
+				'rule' => array('maxlength', 45),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+				'allowEmpty' => false,
+				'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'start' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
+			'date' => array(
+				'rule' => array('date'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -43,11 +43,11 @@ class Course extends AppModel {
 			),
 		),
 		'end' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
+			'date' => array(
+				'rule' => array('date'),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+				'allowEmpty' => false,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -56,53 +56,13 @@ class Course extends AppModel {
 			'alphanumeric' => array(
 				'rule' => array('alphanumeric'),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+				'allowEmpty' => false,
+				'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'status' => array(
-			'inlist' => array(
-				'rule' => array('inlist'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'created' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'modified' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'modfied' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+    );
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -113,9 +73,10 @@ class Course extends AppModel {
  */
 	public $belongsTo = array(
 		'Teacher' => array(
-			'className' => 'Teacher',
+			'className' => 'User',
 			'foreignKey' => 'teacher_id',
-			'conditions' => '',
+                        'table'=> 'users',
+			'conditions' => ' Teacher.admin = true',
 			'fields' => '',
 			'order' => ''
 		)
@@ -149,11 +110,11 @@ class Course extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'enrollments' => array(
-			'className' => 'enrollments',
-			'joinTable' => 'course_users',
-			'foreignKey' => 'id',
-			'associationForeignKey' => '3',
+		'Users' => array(
+			'className' => 'CoursesUser',
+			'joinTable' => 'courses_users',
+			'foreignKey' => 'user_id',
+			'associationForeignKey' => 'course_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -166,4 +127,23 @@ class Course extends AppModel {
 		)
 	);
 
+        public function findCurrent($user_id){
+
+
+            return true;
+        }
+
+        public function getStudentCurrentCourse($user_id){
+
+            $conditions = array(
+                0=> 'Course.start > current_date()',
+                1=> 'Course.end < current_date()',
+                'User.id'=>$user_id,
+            );
+
+            $this->Behaviors->load('Containable');
+            $this->contain(array('User','CoursesUser'));
+            $this->CourseStudents->recursive = 1;
+            return $this->CourseStudents->find('first', $conditions);
+        }
 }
