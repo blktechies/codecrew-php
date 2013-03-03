@@ -27,7 +27,15 @@
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('bootstrap.min'); ?>
+
+		<style>
+			body {
+				padding-top: 120px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+		</style>
+
+		<?php
 		echo $this->Html->css('boostrap-responsive.min');
 		echo $this->Html->css('style');
 
@@ -38,21 +46,22 @@
 </head>
 <body>
 		<?php echo $this->element('header'); ?>
-		<div id="content">
+		<div class="container">
 
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
+
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => __('CakePHP: the rapid development php framework'), 'border' => '0')),
 					'http://www.cakephp.org/',
 					array('target' => '_blank', 'escape' => false)
 				);
 			?>
+
+			<?php echo $this->element('sql_dump'); ?>
 		</div>
-	</div>
-	<?php echo $this->element('sql_dump'); ?>
+
+	
 </body>
 </html>
