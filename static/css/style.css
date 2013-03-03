@@ -144,12 +144,21 @@ hr {
 	float:right;
 }
 
-#single .span1 a{
-	display: block;
-	border: 1px solid red;
-	width: 15px;
-	height: 15px;
-	background: url('../img/glyphicons.png') no-repeat -34px -953px;
-	text-indent: -1000px;
+#single .span1 {
+	font-family: 'Fjalla One', sans-serif;
+	text-align: center;
+	line-height: 15px;
 }
 
+#single .span1 img {
+	margin-bottom: 5px;
+}
+
+#single .span1 a{
+	color: #000;
+}
+
+#single .span1 a:hover{
+	color: #000;
+	text-decoration: none;
+}
