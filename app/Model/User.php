@@ -154,63 +154,108 @@ class User extends AppModel {
 			'className' => 'Answer',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
 		'Comment' => array(
 			'className' => 'Comment',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
 		'Question' => array(
 			'className' => 'Question',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
 		'Vote' => array(
 			'className' => 'Vote',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'Courses' => array(
+			'className' => 'CoursesUser',
+			'joinTable' => 'courses_users',
+			'foreignKey' => 'users.id',
+			'associationForeignKey' => 'courses.id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+		),
+            	'CurrentCourse' => array(
+			'className' => 'CoursesUser',
+			'joinTable' => 'courses_users',
+			'foreignKey' => 'users.id',
+			'associationForeignKey' => 'courses.id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+		),
+
+	);
+
+/** Methods for getting Current User in Model Functions **/
+
+
+    private function &getInstance($user=null) {
+      static $instance = array();
+
+      if ($user) {
+        $instance[0] =& $user;
+      }
+
+      if (!$instance) {
+        trigger_error(__("User not set.", true), E_USER_WARNING);
+        return false;
+      }
+
+      return $instance[0];
+    }
+
+    public function store($user) {
+      if (empty($user)) {
+        return false;
+      }
+
+      User::getInstance($user);
+    }
+
+    public function get($path) {
+      $_user =& User::getInstance();
+
+      $path = str_replace('.', '/', $path);
+      if (strpos($path, 'User') !== 0) {
+        $path = sprintf('User/%s', $path);
+      }
+
+      if (strpos($path, '/') !== 0) {
+        $path = sprintf('/%s', $path);
+      }
+
+      $value = Set::extract($path, $_user);
+
+      if (!$value) {
+        return false;
+      }
+
+      return $value[0];
+    }
+
+/** Model Callbacks **/
 
     public function beforeSave($options = array()) {
         // Use bcrypt
         if (isset($this->data['User']['password'])) {
-            $hash = Security::hash($this->data['User']['password'], 'blowfish');
+            //$hash = Security::hash($this->data['User']['password'], 'blowfish');
+            $hash = $this->data['User']['password'];
             $this->data['User']['password'] = $hash;
         }
         return true;
     }
+
+/** Functions **/
+
 }

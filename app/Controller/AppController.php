@@ -32,6 +32,9 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    var $uses = array('Courses', 'User');
+
+
     public $components = array(
         'Session',
         'Auth' => array(
@@ -43,4 +46,21 @@ class AppController extends Controller {
             ),
         ),
     );
+    
+    public function beforFilter(){
+        parent::beforeFilter();
+        App::import('Model', 'User');
+        User::store($this->Auth->user());
+    }
+
+    public function beforeSave(){
+        parent::beforeSave();
+        return $this->setUserAndCourse($data);
+    }
+    
+    private function setUserAndCourse($data){
+        $data['user_id'] = User::get('id');
+        $data['course_id'] = $this->Course->findCurrent($data['user_id']);
+        return $data;
+    }
 }
