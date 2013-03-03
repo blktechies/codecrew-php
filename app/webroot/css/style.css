@@ -1,0 +1,164 @@
+input[type="text"] {
+	font-size: 35px;
+	height: 40px;
+	padding: 20px 5;
+
+}
+
+.brand img {
+	margin-left: 73px;
+}
+
+.navbar .nav {
+	float: right;
+	margin-right: 95px;
+}
+
+#navigation {
+	border-bottom: 1px solid #999;
+	margin-bottom: 20px;
+}
+
+#navigation ul {
+	font-family: 'Fjalla One', sans-serif;
+	list-style-type: none;
+	display: inline-block;
+	margin: 0;	
+}
+
+#navigation li {
+	float: left;
+	margin-left:30px;
+}
+
+#navigation li a {
+	font-weight: normal;
+}
+
+#navigation li.first {
+	margin: 0 50px 0 0;
+}
+
+button.btn {
+	height: 48px;
+	font-size: 20px;
+}
+
+.label:hover {
+	background: darkgreen;
+}
+
+.label a {
+	color: #fff;
+}
+
+.label a:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+.question p {
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+p.askby {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:10px;
+	margin-top:5px;
+	line-height: 15px;
+}
+
+.askby a {
+	color: #000;
+
+}
+
+#stats {
+	float: right;
+}
+
+#stats li {
+	float: left;
+	list-style-type: none;
+	text-align: center;
+	margin-left: 5px;
+	font-size: 10px;
+	font-family: 'Fjalla One', sans-serif;
+}
+
+#stats li span {
+	display: block;
+	font-size: 30px;
+}
+
+#stats .well {
+	padding: 10px 10px 0 10px;
+	background: darkgray;
+}
+
+#tags {
+	margin: 0;
+}
+
+hr {
+	margin-left: 20px;
+}
+
+@media (min-width: 1200px) {
+	hr {
+		margin-left: 30px;
+	}
+}
+
+#sidebar h3 {
+	font-family: 'Fjalla One', sans-serif;
+}
+
+.comments {
+	margin-top: 40px;
+}
+
+.comments div {
+	border-bottom: 1px solid silver;
+	margin-bottom: 10px;
+}
+
+.comments div:last-child {
+		border-bottom:0;
+}
+
+.comments div p {
+	font-size: 14px;
+	line-height: 20px;
+	color: #999;
+}
+
+#single h2 {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+#single #tags {
+	float:right;
+}
+
+#single .span1 {
+	font-family: 'Fjalla One', sans-serif;
+	text-align: center;
+	line-height: 15px;
+}
+
+#single .span1 img {
+	margin-bottom: 5px;
+}
+
+#single .span1 a{
+	color: #000;
+}
+
+#single .span1 a:hover{
+	color: #000;
+	text-decoration: none;
+}
